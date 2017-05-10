@@ -1,0 +1,3 @@
+curl -u 'ptgc' https://api.github.com/user/repos -d '{ "name": "NodejsCDUDemo" }'
+
+git remote add origin https://github.com/ptgc/NodejsDemo.git
