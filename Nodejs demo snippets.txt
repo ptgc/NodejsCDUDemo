@@ -1,3 +1,5 @@
+https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+
 curl -u ptgc https://api.github.com/user/repos -d '{ "name": "NodejsCDUDemo" }'
 
 git remote add origin https://github.com/ptgc/NodejsCDUDemo.git
@@ -5,3 +7,30 @@ git remote add origin https://github.com/ptgc/NodejsCDUDemo.git
 git config credential.helper store
 
 git push origin master
+
+pip install --user azure-cli
+
+gitrepo=https://github.com/ptgc/NodejsCDUDemo.git
+webappname=NodejsCDUdemotest
+
+recourcegroupname=nodejscdutestreacourcegroup
+
+az login
+
+az account set --subscription 128b3162-75ce-42fe-81cd-d871b6383c2b
+
+# Create a resource group.
+az group create --location westeurope --name nodejscdutestreacourcegroup
+
+# Create an App Service plan in `FREE` tier.
+az appservice plan create --name NodejsCDUdemotest --resource-group nodejscdutestreacourcegroup --sku FREE
+
+# Create a web app.
+#az appservice web create --name NodejsCDUdemotest --resource-group nodejscdutestreacourcegroup --plan NodejsCDUdemotest
+az webapp create --name NodejsCDUdemotest --resource-group nodejscdutestreacourcegroup --plan NodejsCDUdemotest
+
+# Deploy code from a public GitHub repository. 
+az webapp deployment source config --name NodejsCDUdemotest --resource-group nodejscdutestreacourcegroup --repo-url https://github.com/ptgc/NodejsCDUDemo.git --branch master --manual-integration
+
+# Browse to the web app.
+az webapp browse --name NodejsCDUdemotest --resource-group nodejscdutestreacourcegroup
